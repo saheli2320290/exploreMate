@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+<style>
+.welcome{
+    text-align:center;
+    font-size:30px;
+    margin-bottom:40px;
+    color:#007bff;
+}
+
+.cards{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+}
+
+.card{
+    width:320px;
+    height:220px;
+    background:white;
+
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.15);
+    text-align:center;
+    padding-top:45px;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card h2{
+    color:x;
+    margin-bottom:15px;
+    font-size:28px;
+}
+
+.card p{
+    color:#666;
+    margin-bottom:25px;
+    font-size:18px;
+}
+
+.card a{
+    text-decoration:none;
+    background:#198754;
+    color:white;
+    padding:12px 25px;
+    border-radius:8px;
+    font-size:16px;
+}
+
+.card a:hover{
+    background:#157347;
+}
+
+
+
+
+
+</style>
+
+</head>
+<body>
+    <nav class="navbar">
+
+    
+    <div class="logo">
+                <span class="icon">🌐</span> ExploreMate
+    </div>
+
+    
+    <ul class="menu">
+        <li><a href="adminDashboard.html">Home</a></li>
+        <li><a href="About.html">About Us</a></li>
+        <li><a href="Home.html">Sign Out</a></li>
+    </ul>
+
+</nav>
+
+
+<div class="container">
+
+    <div class="welcome">
+        Welcome Admin
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <h2>User Management</h2>
+            <p>View, Update & Delete Users</p>
+            <a href="users.php">Open</a>
+        </div>
+
+        <div class="card">
+            <h2>Destination Management</h2>
+            <p>Add, Update & Delete Places</p>
+            <a href="destination_dashboard.php">Open</a>
+        </div>
+
+    
+</div>
+
+</body>
+<script>
+   
+    window.onload = function () {
+        fetch('get_username.php')
+            .then(response => response.text())
+            .then(name => {
+                
+                document.querySelector('.welcome').innerText = "Welcome Admin, " + name;
+            })
+            .catch(err => console.log('Error fetching username:', err));
+    };
+</script>
+</html>

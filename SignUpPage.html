@@ -1,0 +1,142 @@
+<!-- signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up - ExploreMate</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <div class="logo"><span class="icon">🌐</span> ExploreMate</div>
+        <ul class="nav-links">
+            <li><a href="Home.html">Home</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="auth-container">
+<div class="auth-box">
+
+<h2>Create Account</h2>
+
+<div id="msg"></div>
+
+<form action="signup.php" method="POST" autocomplete="off">
+
+<div class="input-group">
+<select name="user_level" required>
+<option value="" disabled selected>Select User Level</option>
+<option value="user">USER</option>
+<option value="admin">ADMIN</option>
+</select>
+<span class="form-note">Please select your account type.</span>
+</div>
+
+<div class="input-group">
+<input type="email" name="email" placeholder="Email Address" required>
+<span class="form-note">Format: example@email.com</span>
+</div>
+
+<div class="input-group">
+<input type="text" name="username" placeholder="Username" required>
+<span class="form-note">Must be CAPITAL LETTERS and more than 5 characters.</span>
+</div>
+
+<div class="input-group">
+<label>Password</label>
+<div class="password-wrapper">
+        <input type="password" id="password" name="password" placeholder="********" required > 
+        <button type="button" class="toggle-btn" onclick="togglePassword('password')">👁</button>
+    </div>
+    <span class="form-note">8-16 characters: Must include A-Z, a-z, 0-9, and symbols.</span>
+</div>
+
+<div class="input-group">
+<label>Confirm Password</label>
+<div class="password-wrapper">
+    <input type="password" id="confirmpassword" name="confirmpassword" placeholder="********" required>
+    <button type="button" class="toggle-btn" onclick="togglePassword('confirmpassword')">👁</button>
+</div>
+<span class="form-note">Re-Enter the Password</span>
+</div>
+
+<button type="submit" class="btn primary">Create Account</button>
+
+</form>
+
+<p>Already have an account? <a href="SignInPage.html">Sign In</a></p>
+
+</div>
+</main>
+
+<script>
+function togglePassword(fieldId){
+    const field = document.getElementById(fieldId);
+    field.type = field.type === "password" ? "text" : "password";
+}
+
+
+const params = new URLSearchParams(window.location.search);
+
+if(params.get("success")==="1"){
+    document.getElementById("msg").innerHTML =
+    "<p style='color:green;text-align:center;'>Account created successfully ✔</p>";
+
+    
+    setTimeout(function(){
+        window.location.href = "SignInPage.html";
+    }, 1000);
+}
+
+if(params.get("exist")==="1"){
+    document.getElementById("msg").innerHTML =
+    "<p style='color:red;text-align:center;'>Username already used!</p>";
+}
+
+if(params.get("error")==="1"){
+    document.getElementById("msg").innerHTML =
+    "<p style='color:red;text-align:center;'>Signup failed!</p>";
+}
+
+
+
+document.querySelector("form").addEventListener("submit", function(e){
+
+    let username = document.querySelector("input[name='username']").value.trim();
+    let password = document.querySelector("input[name='password']").value;
+    let confirmPassword = document.querySelector("input[name='confirmpassword']").value;
+
+    // Username: CAPITAL letters, min 5 chars
+    let usernamePattern = /^[A-Z]{5,}$/;
+
+    // Password: 8–16 chars, uppercase, lowercase, number, symbol
+    let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,16}$/;
+
+    if(!usernamePattern.test(username)){
+        alert("Username must be CAPITAL letters and at least 5 characters!");
+        e.preventDefault();
+        return;
+    }
+
+    if(!passwordPattern.test(password)){
+        alert("Password must be 8-16 characters with uppercase, lowercase, number, and symbol!");
+        e.preventDefault();
+        return;
+    }
+
+    if(password !== confirmPassword){
+        alert("Passwords do not match!");
+        e.preventDefault();
+        return;
+    }
+
+});
+</script>
+
+</body>
+</html>
